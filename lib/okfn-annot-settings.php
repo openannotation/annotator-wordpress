@@ -11,11 +11,11 @@ class OkfnAnnotSettings {
   function __construct(){
   }
 
-  /**
-   * Registers the settings menu item (with its respective page)
+  /*
+   * Registers the Annotator plugin settings page and its menu item
    * using wordpress special function 'add_options_page'
    *
-   * @void
+   * returns nothing
    *
    */
 
@@ -30,26 +30,30 @@ class OkfnAnnotSettings {
   }
 
 
- /**
-  * Sets the plugin options using the form input fields
+ /*
+  * Sets the plugin options using the form input fields sent through the form
   *
   *
-  * @param params Mixed the request paramters
+  * params - the request paramters
+  *
+  * returns nothing.
   *
   */
+
  function process_settings_form($params){
    $prefix = self::$forminput_prefix;
-   $options=OKNFUtils::filter_by_regexp($prefix, $params);
+   $options=OkfnUtils::filter_by_regexp($prefix, $params, $remove_matches=true);
 
    foreach($options as $option => $value) {
      update_option($option, $value);
    }
  }
 
- /**
+ /*
+  *
   * Renders the HTML for the Annotator settings options page.
   *
-  * @return String the rendered template
+  * returns a rendered form template
   *
   */
 
@@ -64,19 +68,20 @@ class OkfnAnnotSettings {
    return $mustache->render($template, $options);
  }
 
- /**
-  * 
+ /*
+  * Public:
   *
   * Logical switch determining whether to render or to process the setting form
   * on the basis of the presence of special parameter
   *
   *
-  * @param $params Mixed the request parameters
+  * params - the request parameters
   *
+  *
+  * returns nothing
   */
 
   function process_request($params) {
-
     $this->register_menu();
 
     (isset($params[ $this->submit_parameter_name  ])) ?

@@ -1,46 +1,55 @@
 <?php
+
 /**
- * @package OkfnAnnotator 
+ * @package OkfnAnnotator
  * @author Andrea Fiore
  *
+ * Collection of utility functions
  *
  */
+
 class OkfnUtils {
 
-  /**
-   * Extracts from an array the list key values matching a certain regular expression.
-   * Optionally, also removes the regexp string from the extracted keys
+  /*
+   * Extracts from an array the key values pairs matching a certain regular expression.
+   * Optionally, also strips the matched string from the extracted keys.
    *
-   * @param $regexp String A regular expression string (within delimiters)
-   * @param $array Array The collection to be filtered
-   * @param $remove_prefix Boolean (defaults to false) 
+   * regexp          - A regular expression string (within delimiters).
+   * array           - The array to be filtered (is supposed to be an associative array).
+   * remove_matches   - Whether the matched string should be removed or not (defaults to false).
    *
-   * @return Array the filtered key-value collection
+   * examples
    *
-   * @example:
+   *   $annotator_options = OkfnUtils::filter_by_regexp('/^okfn-annotator/', $_POST, $remove_matches=true);
    *
-   *   $annotator_options = OkfnUtils::filter_by_regexp('/^okfn-annotator/', $_POST, $remove_match=true);
-   *
+   * returns the filtered key-value collection
    */
-  static function filter_by_regexp($regexp, $array, $remove_match=false) {
-    $lambda = create_function('&$regex, $item', 'return preg_match($regex, $item);');
-    $filtered_array = array_filter($array, $lambda);
 
-    if ($remove_match) {
-      foreach ($filtered_array as $key => $value) {
-        unset($filtered_array[$key]);
-        $filtered_array[ preg_replace($regexp, '')] = $value;
-      }
+  static function filter_by_regexp($regexp, $array, $remove_matches=false) {
+    $filter_lambda = create_function('$item, $reg="' . $regexp .'"' , ' return preg_match($reg, $item); ');
+    $replace_lambda = create_function('$item, $reg="' . $regexp .'"', 'return preg_replace($reg, "", $item);');
+
+
+    list($filtered_keys,$filtered_array) = array(
+      array_filter(array_keys($array), $filter_lambda),
+      null
+    );
+
+    foreach($filtered_keys as $key) {
+      $new_key = ($remove_matches)? $replace_lambda($key) : $key;
+      $filtered_array[$new_key] = $array[$key];
     }
+
+    return $filtered_array;
   }
 
-  /**
-   * Simple utility method for retrieving templates' content
+  /*
+   * Simple utility method for retrieving templates
    *
-   * @template String the template name
-   * @directory String the template directory (defaults to 'templates')
+   * template  - the template name
+   * directory - the template directory (defaults to 'templates')
    *
-   * @return String the template content
+   * return the template content
    *
    *
    */
