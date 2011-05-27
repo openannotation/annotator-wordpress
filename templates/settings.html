@@ -1,0 +1,11 @@
+<div class="wrap">
+  <h2><?php echo __( 'OSCommerce Product Display Options', 'okfn_annot' ) ?></h2>
+
+  <form name="oscimp_form" method="post" action="<?php echo str_replace( '%7E', '~', $_SERVER['REQUEST_URI']); ?>">
+	<input type="hidden" name="oscimp_hidden" value="Y">
+
+	<p class="submit">
+	<input type="submit" name="Settingsubmit" value="<?php _e('Update Options', 'oscimp_trdom' ) ?>" />
+	</_ep>
+  </form>
+</div>
