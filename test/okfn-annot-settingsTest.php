@@ -2,6 +2,18 @@
 
 require_once '../lib/okfn-annot-settings.php';
 
+
+/*
+ * fake wordpress hook registration function.
+ */
+
+function add_action($action_hook, array $action) {
+  call_user_func($action,array());
+}
+
+
+
+
 // Dummy wrapper, needed as PHPUnit does not allow to call mock object directly
 // but expects them to be passed into as 'collaborators' other wrapper objects 
 // and called internally within them.

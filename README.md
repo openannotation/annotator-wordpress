@@ -1,5 +1,5 @@
-# WP-Annotator
-Integrates OKFN Annotator JavaScript library within the Wordpress blogging platform
+# Annotator for Wordpress
+Integrates the Annotator JavaScript library within the Wordpress blogging platform
 
-(Just started... a first pre-alpha version will be ready in few days)
+(Just started... a first pre-alpha version will be ready soon)
 

@@ -19,11 +19,17 @@ Author URI: http://okfn.org/projects/annotator/
 License: GPLv2 or later
 */
 
-foreach(array(
-  'vendor/Mustache',
-  'lib/okfn-utils',
-  'lib/okfn-annot-settings',
 
-) as $lib) require("${lib}.php");
 
+if (is_admin()) {
+
+   foreach(array(
+     'vendor/Mustache',
+     'lib/okfn-utils',
+     'lib/okfn-annot-settings',
+
+   ) as $lib) require("${lib}.php");
+
+  $settings = new OkfnAnnotSettings();
+}
 ?>

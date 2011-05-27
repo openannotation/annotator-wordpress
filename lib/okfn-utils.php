@@ -26,7 +26,7 @@ class OkfnUtils {
    */
 
   static function filter_by_regexp($regexp, $array, $remove_matches=false) {
-    $filter_lambda = create_function('$item, $reg="' . $regexp .'"' , ' return preg_match($reg, $item); ');
+    $filter_lambda = create_function('$item, $reg="' . $regexp .'"' , 'return preg_match($reg, $item); ');
     $replace_lambda = create_function('$item, $reg="' . $regexp .'"', 'return preg_replace($reg, "", $item);');
 
 
@@ -54,7 +54,8 @@ class OkfnUtils {
    *
    */
   static function get_template($file, $directory='templates') {
-    return file_get_contents("${directory}/${file}");
+    $plugin_path = dirname(dirname(__FILE__));
+    return file_get_contents("{$plugin_path}/{$directory}/{$file}");
   }
 
 

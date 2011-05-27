@@ -1,11 +1,45 @@
 <div class="wrap">
-  <h2><?php echo __( 'OSCommerce Product Display Options', 'okfn_annot' ) ?></h2>
+  <div class="icon32" id="icon-options-general"><br></div>
+  <h2>OKFN Annotator</h2>
 
-  <form name="oscimp_form" method="post" action="<?php echo str_replace( '%7E', '~', $_SERVER['REQUEST_URI']); ?>">
-	<input type="hidden" name="oscimp_hidden" value="Y">
+  {{#form_submitted}}
+  <div class="updated settings-error" id="setting-error-settings_updated"> 
+    <p><strong>Settings saved.</strong></p>
+  </div>
+  {{/form_submitted}}
 
-	<p class="submit">
-	<input type="submit" name="Settingsubmit" value="<?php _e('Update Options', 'oscimp_trdom' ) ?>" />
-	</_ep>
+
+
+  <form name="{{prefix}}" method="post" action="{{action}}">
+ 	<table class="form-table">
+ 	  <tbody>
+ 	  <tr valign="top">
+ 		<th scope="row"><label for="{{prefix}}-accountid">Accound Id</label></th>
+ 		<td>
+ 		   <input type="text" name="{{prefix}}-accountid" id="{{prefix}}-accountid" value="{{accountid}}"/>
+ 		 </td>
+ 	  </tr>
+       <tr valign="top">
+ 		<th scope="row">
+		  <label for="{{prefix}}-auth_token">Auth Token (<em>currently not needed</em>)</label>
+ 	    </th>
+ 		<td>
+ 	      <input type="text" name="{{prefix}}-auth_token" id="{{prefix}}-auth_token" value="{{auth_token}}" />
+ 		</td>
+ 	  </tr>
+       <tr valign="top">
+ 		<th scope="row">
+		  <label for="{{prefix}}-store_uri">Store URI (<em>leave blank for using Annotateit.org</em>)</label>
+ 		</th>
+ 		<td>
+		  <input type="text" name="{{prefix}}-store_uri" id="{{prefix}}-store_uri" value="{{store_uri}}" />
+ 		</td>
+ 	  </tr>
+	</tbody>
+   </table>
+   <p class="submit">
+    <input type="hidden" name="{{submit_name}}" value="true" />
+	<input type="submit" name="submit" value="{{submit_value}}" />
+	</p>
   </form>
 </div>

@@ -2,6 +2,7 @@
 require_once '../lib/okfn-utils.php';
 
 class OkfnAnnotSettingsTest extends PHPUnit_Framework_TestCase {
+
   function test_filter_by_regexp(){
     $filtered = OkfnUtils::filter_by_regexp('/^my-input-/', array(
       'foo' => 1,
@@ -10,7 +11,7 @@ class OkfnAnnotSettingsTest extends PHPUnit_Framework_TestCase {
       'my-input-bar' => 4
     ), true);
 
-    $this->assertEquals($filtered,array(
+    $this->assertEquals($filtered, array(
       'foo' => 3,
       'bar' => 4
     ));
