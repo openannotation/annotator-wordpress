@@ -31,9 +31,14 @@ class OkfnAnnotInjector extends OkfnBase {
       )
     )
   );
+  private $factory;
+  private $content_policy;
 
-  function __construct(){
+  function __construct($factory,$content_policy=null){
     parent::__construct();
+
+    $this->factory = $factory;
+    $this->content_policy = $content_policy;
   }
 
   /*
@@ -139,12 +144,24 @@ class OkfnAnnotInjector extends OkfnBase {
     }
   }
 
-  function inject() {
-    //TODO: implement the annotator inclusion logic here ; design a simple mechanism whereby the
-    //      user can specify in what URL patterns or content types the annotator should be included.
+  /*
+   *
+   * Prints the instantiation snippet produced by the OkfnAnnotFactory object
+   *
+   * returns nothing
+   */
+  function print_snippet() {
+     $snippet = $this->factory->create_snippet();
+     if ($snippet) {
+       print implode("\n",array('<script>', $snippet, '</script>'));
+     }
+  }
 
+  function inject() {
+    add_action('wp_footer', array($this,'print_snippet'));
     add_action('wp_print_styles', array($this,'load_stylesheets'));
     add_action('wp_print_scripts', array($this,'load_javascripts'));
+    //todo: add content policy here...
   }
 }
 ?>

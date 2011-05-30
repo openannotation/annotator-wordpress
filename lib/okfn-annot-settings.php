@@ -31,7 +31,7 @@ class OkfnAnnotSettings extends OkfnBase{
    * automatically add the plugin prefix defined in '$conf->forminput_prefix'.
    *
    * option        - the name of the option to be retrieved
-   * namespace     - whether or not the plugin prefix should be prepended; defaults to true (optional).
+   * useprefix     - whether or not the plugin prefix should be prepended; defaults to true (optional).
    *
    *
    * returns an option value
@@ -39,10 +39,10 @@ class OkfnAnnotSettings extends OkfnBase{
 
   function get_option($option,$prefix=true) {
     if ($prefix) {
-      $option = $prefix . '-' . $option;
+      $option_name = $this->conf->forminput_prefix . '-' . $option;
     }
 
-    return get_option($option);
+    return get_option($option_name);
   }
 
   /*

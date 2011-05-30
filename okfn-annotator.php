@@ -26,15 +26,15 @@ foreach(array(
   'lib/okfn-base',
   'lib/okfn-annot-settings',
   'lib/okfn-annot-injector',
+  'lib/okfn-annot-factory',
 
 ) as $lib) require("${lib}.php");
 
-if (is_admin()) {
-  $settings = new OkfnAnnotSettings;
+$settings = new OkfnAnnotSettings;
 
-} else {
-  $injector = new OkfnAnnotInjector;
+if (!is_admin()) {
+  $factory  = new OkfnAnnotFactory($settings);
+  $injector = new OkfnAnnotInjector($factory);
   $injector->inject();
-
 }
 ?>
