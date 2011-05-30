@@ -1,7 +1,5 @@
 <?php
-require_once '../lib/okfn-utils.php';
-
-class OkfnAnnotSettingsTest extends PHPUnit_Framework_TestCase {
+class OkfnAnnotUtilsTest extends PHPUnit_Framework_TestCase {
 
   function test_filter_by_regexp(){
     $filtered = OkfnUtils::filter_by_regexp('/^my-input-/', array(
@@ -15,6 +13,27 @@ class OkfnAnnotSettingsTest extends PHPUnit_Framework_TestCase {
       'foo' => 3,
       'bar' => 4
     ));
+  }
+
+  function test_objectify() {
+    $object = OkfnUtils::objectify(array(
+       'a' => array(
+          'a1' => array(
+             'a1a' => 'hi!'
+           )
+        ),
+        'b'
+    ));
+    $this->assertEquals($object->a->a1->a1a,'hi!');
+  }
+
+  function test_unque_id() {
+    for ($index = 0; $index < 3; $index++) {
+      $ids[]=(int) OkfnUtils::unique_id($prefix='');
+    }
+
+    $this->assertGreaterThan($ids[1],$ids[2]);
+    $this->assertGreaterThan($ids[0],$ids[1]);
   }
 }
 ?>

@@ -8,8 +8,7 @@
   </div>
   {{/form_submitted}}
 
-
-
+  <h3>Account</h3>
   <form name="{{prefix}}" method="post" action="{{action}}">
  	<table class="form-table">
  	  <tbody>
@@ -21,7 +20,7 @@
  	  </tr>
        <tr valign="top">
  		<th scope="row">
-		  <label for="{{prefix}}-auth_token">Auth Token (<em>currently not needed</em>)</label>
+		  <label for="{{prefix}}-auth_token">Auth Token </label>
  	    </th>
  		<td>
  	      <input type="text" name="{{prefix}}-auth_token" id="{{prefix}}-auth_token" value="{{auth_token}}" />
@@ -29,7 +28,7 @@
  	  </tr>
        <tr valign="top">
  		<th scope="row">
-		  <label for="{{prefix}}-store_uri">Store URI (<em>leave blank for using Annotateit.org</em>)</label>
+		  <label for="{{prefix}}-store_uri">Store URI </label>
  		</th>
  		<td>
 		  <input type="text" name="{{prefix}}-store_uri" id="{{prefix}}-store_uri" value="{{store_uri}}" />
@@ -37,6 +36,29 @@
  	  </tr>
 	</tbody>
    </table>
+   <p>
+     <h3>Embedding options</h3>
+ 	<table class="form-table">
+ 	  <tbody>
+		<tr valign="top">
+	    <!-- these could be more than one -->
+		<th scope="row"><label for="{{prefix}}-annotator_content">Content area <small>(css selector)</small></label></th>
+ 		<td>
+ 		   <input type="text" name="{{prefix}}-annotator_content" id="{{prefix}}-annotator_content" value="{{annotator_content}}"/>
+ 		 </td>
+ 	  </tr>
+       <tr valign="top">
+ 		<th scope="row">
+		  <label for="{{prefix}}-url_pattern">Url inclusion pattern <small>(Perl style regexp)</small></label>
+ 	    </th>
+ 		<td>
+ 	      <input type="text" name="{{prefix}}-url_pattern" id="{{prefix}}-url_pattern" value="{{url_pattern}}" />
+ 		</td>
+ 	  </tr>
+	</tbody>
+   </table>
+   </p>
+
    <p class="submit">
     <input type="hidden" name="{{submit_name}}" value="true" />
 	<input type="submit" name="submit" value="{{submit_value}}" />

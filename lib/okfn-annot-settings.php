@@ -1,8 +1,11 @@
 <?php
-class OkfnAnnotSettings {
+class OkfnAnnotSettings extends OkfnBase{
 
-  private $conf = array(
-    //class configuration variables
+  /*
+   * Class configuration variables
+   *
+   */
+  protected $conf = array(
     'forminput_prefix' => 'okfn-annot',
     'settings_page_title' => 'OKFN Annotator settings',
     'menu_item_title' => 'OKFN Annotator',
@@ -14,12 +17,32 @@ class OkfnAnnotSettings {
       'accountid' => '',
       'auth_token' => '',
       'store_uri' => '',
+      'annotator_content' => '.entry-content',
     )
   );
 
   function __construct(){
-    $this->conf = (object) $this->conf;
-    add_action('admin_menu', array($this, 'register_menu'));
+    parent::__construct();
+    add_action('admin_menu', array($this,'register_menu'));
+  }
+
+  /*
+   * Wrapper for calling wordpress internal 'get_option'. Its sole function is to
+   * automatically add the plugin prefix defined in '$conf->forminput_prefix'.
+   *
+   * option        - the name of the option to be retrieved
+   * namespace     - whether or not the plugin prefix should be prepended; defaults to true (optional).
+   *
+   *
+   * returns an option value
+   */
+
+  function get_option($option,$prefix=true) {
+    if ($prefix) {
+      $option = $prefix . '-' . $option;
+    }
+
+    return get_option($option);
   }
 
   /*
@@ -31,8 +54,8 @@ class OkfnAnnotSettings {
    */
 
   function register_menu() {
+    echo 'registering menu';
     add_options_page(
-
       $this->conf->settings_page_title,
       $this->conf->menu_item_title,
       'manage_options',                   //wordpress permission level
@@ -41,7 +64,11 @@ class OkfnAnnotSettings {
     );
   }
 
-
+  /*
+   * Checks for the presence of the form submit tocken
+   *
+   * returns a boolean
+   */
 
   function form_is_submitted($params) {
     return isset($params[ $this->conf->submit_parameter_name  ]);
@@ -59,7 +86,7 @@ class OkfnAnnotSettings {
 
  function process_settings_form($params){
    $prefix = $this->conf->forminput_prefix;
-   $options=OkfnUtils::filter_by_regexp("/^{$prefix}-/", $params, $remove_matches=true);
+   $options=OkfnUtils::filter_by_regexp("/^{$prefix}-/", $params);
 
    foreach($options as $option => $value) {
      update_option($option, $value);
@@ -77,8 +104,6 @@ class OkfnAnnotSettings {
   *
   * returns a rendered form template
   *
-  *
-  *
   */
 
  function render_settings_form($is_submit=false) {
@@ -93,7 +118,8 @@ class OkfnAnnotSettings {
    );
 
    foreach($this->conf->default_options as $optname => $value) {
-     $options[$optname] = get_option($optname);
+     $stored_value = get_option("{$prefix}-{$optname}");
+     $options[$optname] = empty($stored_value) ? $value : $stored_value ;
    }
 
 
@@ -105,8 +131,7 @@ class OkfnAnnotSettings {
  /*
   * Public:
   *
-  * Logical switch determining whether to render or to process the setting form
-  * on the basis of the presence of special parameter
+  * Logical switch determining whether to render or to process the setting form.
   *
   *
   * params - the request parameters (defaults to $_POST if not provided).
@@ -121,9 +146,7 @@ class OkfnAnnotSettings {
       $params = $_POST;
     }
 
-    $this->register_menu();
-
-    ( $this->form_is_submitted($params) ) ?
+    ( $this->form_is_submitted($params)) ?
       $this->process_settings_form($params) :
       $this->render_settings_form() ;
   }

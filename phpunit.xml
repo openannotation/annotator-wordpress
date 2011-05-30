@@ -1,0 +1,8 @@
+<phpunit bootstrap="test/test-bootstrap.php">
+ <testsuites>
+    <testsuite name="OKFN Annotator plugin for Wordpress">
+     <file>test/okfn-annot-settingsTest.php</file> 
+     <file>test/okfn-utilsTest.php</file>
+    </testsuite>
+  </testsuites>
+</phpunit>

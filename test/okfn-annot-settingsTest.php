@@ -1,49 +1,74 @@
 <?php
 
-require_once '../lib/okfn-annot-settings.php';
-
-
 /*
- * fake wordpress hook registration function.
+ * mocks wordpress' hook registration function
+ * and just runs the registred callback
+ *
+ *
+ * $action   - string identifying the wordpress hook
+ * $callback - a function name of an array containing the instance object as the first element and the method to be called as the second one.
+ *
+ *
+ * returns nothing.
  */
 
-function add_action($action_hook, array $action) {
-  call_user_func($action,array());
+function add_action($action, $callback) {
+  call_user_func($callback);
 }
 
 
 
-
-// Dummy wrapper, needed as PHPUnit does not allow to call mock object directly
-// but expects them to be passed into as 'collaborators' other wrapper objects 
-// and called internally within them.
+/*
+ * Dummy wrapper for calling mocked object. This is needed by PHPUnit as mocks need to
+ * be called from within some other object in order to have their method calls tested.
+ *
+ *
+ */
 
 class SettingsRunner {
 
   /*
+   * Public:
+   *
    * Calls process_request on the mock object and passes an array of request parameters as argument
    *
    * settings          - a mock of OkfnAnnotSettings
    * request_parameter - collection of key value pairs representing the request parameters (no mater whether the method is POST or GET ).
    *
+   *
+   * returns nothing
    */
   function __construct($settings, $request_params=array()) {
+    $settings->__construct();
     $settings->process_request($request_params);
   }
 }
 
+
 class OkfnAnnotSettingsTest extends PHPUnit_Framework_TestCase {
 
-    protected function getSettingsMock() {
-      return $this->getMock('OkfnAnnotSettings', array(
-        'register_menu',
-        'process_settings_form',
-        'render_settings_form'
-      ));
+    protected $methods_to_mock = array(
+      'register_menu',
+      'process_settings_form',
+      'render_settings_form'
+    );
+    /*
+     * Mocks an object
+     *
+     */
+    protected function mockHelper($class, $methods, $constructor_params=array(), $dont_call_constructor=true) {
+
+      $mock_classname = OkfnUtils::unique_id($class . 'Mock');
+      return $this->getMock($class,
+        $methods,
+        $constructor_params,
+        $mock_classname,
+        $dont_call_constructor
+      );
     }
 
     public function testShouldRegisterThePluginMenuItemAndOptionPage() {
-      $mock = $this->getSettingsMock($this);
+      $mock = $this->mockHelper('OkfnAnnotSettings',$this->methods_to_mock);
       $mock->expects($this->once())
            ->method('register_menu');
 
@@ -52,8 +77,8 @@ class OkfnAnnotSettingsTest extends PHPUnit_Framework_TestCase {
 
     public function testShouldRenderTheSettingsForm() {
       $request_params=array('okfn-annot-wrong-submit-button' => true);
+      $mock = $this->mockHelper('OkfnAnnotSettings',$this->methods_to_mock);
 
-      $mock = $this->getSettingsMock();
 
       $mock->expects($this->once())
            ->method('render_settings_form');
@@ -67,7 +92,7 @@ class OkfnAnnotSettingsTest extends PHPUnit_Framework_TestCase {
     public function testShouldProcessTheFormIfTheRightSubmitButtonIsSentOverWithTheRequest() {
       $request_params = array('okfn-annotsettings-submit' => true); //correct submit token
 
-      $mock = $this->getSettingsMock();
+      $mock = $this->mockHelper('OkfnAnnotSettings',$this->methods_to_mock);
 
       $mock->expects($this->never())
            ->method('render_settings_form');
@@ -78,7 +103,6 @@ class OkfnAnnotSettingsTest extends PHPUnit_Framework_TestCase {
 
       new SettingsRunner($mock,$request_params);
     }
-
 
     protected function tearDown() {
     }

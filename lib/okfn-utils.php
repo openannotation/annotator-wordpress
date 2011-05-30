@@ -58,6 +58,49 @@ class OkfnUtils {
     return file_get_contents("{$plugin_path}/{$directory}/{$file}");
   }
 
+  /*
+   * Converts a multi dimensional array into a multi dimensional object
+   * (source: http://www.if-not-true-then-false.com/2009/php-tip-convert-stdclass-object-to-multidimensional-array-and-convert-multidimensional-array-to-stdclass-object/)
+   *
+   * $array - the input array
+   *
+   * examples:
+   *   $object = OkfnUtils::objectify(array(
+   *      'a' => array(
+   *         'a1' => array(
+   *            'a1a' => 'hi!'
+   *          )
+   *       ),
+   *       'b'
+   *   ));
+   *
+   *   echo $object->a->a1->a1a //=> hi!
+   *
+   * returns a multi-dimensional object
+   */
+
+  static function objectify($array) {
+
+    if (is_array($array)) {
+      return (object) array_map(array(__CLASS__, __FUNCTION__), $array);
+    } else {
+      return $array;
+    }
+  }
+
+  /*
+   * Generates a unique identifier by combining a prefix and an autoincremental integer
+   *
+   * prefix - a string to be prepended to the numeric id (optional).
+   *
+   * returns the unique identifer string.
+   *
+   */
+  static function unique_id($prefix='id_') {
+    static $id;
+    $id = isset($id) ? $id + 1 : 0;
+    return "{$prefix}{$id}";
+  }
 
 }
 ?>
