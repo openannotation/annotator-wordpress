@@ -17,9 +17,6 @@ class OkfnAnnotInjector extends OkfnBase {
 
     'javascripts' => array(
       array(
-        'file' => 'javascripts/json2.min.js'
-      ),
-      array(
         'file' => 'javascripts/jquery.min.js'
       ),
       array(
@@ -46,8 +43,9 @@ class OkfnAnnotInjector extends OkfnBase {
    *
    */
   function load_javascript_dependencies(){
-    wp_enqueue_style('json2');
-    wp_enqueue_style('jquery');
+    wp_enqueue_script('json2');
+    //deregister the javascript version used by wordpress
+    wp_deregister_script('jquery');
   }
 
   /*
@@ -83,8 +81,35 @@ class OkfnAnnotInjector extends OkfnBase {
    * path - a relative path to an asset
    *
    */
-  function library_id($path) {
+  function asset_id($path) {
     return preg_replace('/(\.min)\.(js|css)$/','.$2', basename($path) );
+  }
+
+
+  /*
+   * Wrapper for for wp_enqueue_{style|script}
+   *
+   * This has been implemented only for mocking/testing purposes.
+   *
+   * asset_id                      - The asset filename (without the path and the .min prefix).
+   * asset_src                     - The asset url (relative to the plugin directory).
+   * dependencies                  - Array of asset filenames specifying other assets that should be loaded first.
+   * version_number                - A version number to be passed to the library; defaults to Wordpress version number, (optional).
+   * in_footer                     - Wether or not to load the library in the document footer rather than the header.
+   * javascripts_or_stylesheets    - Whether to load a javascript or a stylesheet asset
+   *
+   * returns nothing
+   */
+  function wp_enqueue_asset($asset_id, $asset_src, $dependencies, $version_number, $in_footer, $javascripts_or_stylesheets) {
+
+      $loader_function = ($javascripts_or_stylesheets === 'javascripts') ?
+        'wp_enqueue_script' :
+        'wp_enqueue_style';
+
+      call_user_func_array($loader_function, array($asset_id,
+        plugins_url($asset_src , dirname(__FILE__)),
+        $dependencies, $version_number, $in_footer
+      ));
   }
 
   /*
@@ -97,27 +122,19 @@ class OkfnAnnotInjector extends OkfnBase {
    */
 
   private function load_assets($javascripts_or_stylesheets) {
-
     foreach($this->conf->$javascripts_or_stylesheets as $asset) {
 
+      $assid= $this->asset_id($asset->file);
+
       $in_footer = isset($asset->in_footer) && $asset->in_footer;
-
-      $loader_function = ($javascripts_or_stylesheets === 'javascripts') ?
-        'wp_enqueue_script' :
-        'wp_enqueue_style';
-
-
-      call_user_func_array($loader_function, array(
-        $this->library_id($asset->file),
-        plugins_url("{$this->conf->assets_basepath}/{$asset->file}" , dirname(__FILE__)),
-        $asset->dependencies,
-        //optional version number
+      $this->wp_enqueue_asset(
+        $this->asset_id($asset->file),
+        "{$this->conf->assets_basepath}/{$asset->file}",
+        isset($asset->dependencies) ? $asset->dependencies : array(),
         false,
-
-        // note: in 'wp_enqueue_style' this last argument indicates the stylesheet media type (i.e. screen, handled, etc)
-        // we can safely pass the value of $in_footer here, as long as this is false, in which case the value of the media attribute will just default to screen.
-        $in_footer
-      ));
+        $in_footer,
+        $javascripts_or_stylesheets
+      );
 
     }
   }
