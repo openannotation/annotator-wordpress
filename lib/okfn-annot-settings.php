@@ -140,15 +140,16 @@ class OkfnAnnotSettings extends OkfnBase{
   * returns nothing
   */
 
- function process_request($params=null) {
+ function process_request($params=array()) {
 
    if (empty($params)) {
       $params = $_POST;
     }
 
-    ( $this->form_is_submitted($params)) ?
-      $this->process_settings_form($params) :
-      $this->render_settings_form() ;
+
+   ( $this->form_is_submitted($params)) ?
+     $this->process_settings_form($params) :
+     $this->render_settings_form() ;
   }
 
 }

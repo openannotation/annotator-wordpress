@@ -26,4 +26,5 @@ end
 guard 'phpunit', :cli => '--testdox ' do
   watch %r{^lib/(.+)\.php}
   watch %r{^test/(.+)\.php}
+  watch %r{^phpunit.xml$}
 end

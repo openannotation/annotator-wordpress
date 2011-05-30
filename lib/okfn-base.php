@@ -11,6 +11,18 @@ class OkfnBase {
   }
 
   /*
+   * Returns a read only copy of the internal config object.
+   *
+   * returns an object.
+   *
+   */
+  public function get_conf() {
+    return $this->conf;
+  }
+
+
+
+  /*
    * Turns the conf attribute from an array into an object.
    *
    * This is just a tiny bit of syntactical sugar which allows to
@@ -26,5 +38,7 @@ class OkfnBase {
       $this->conf = OkfnUtils::Objectify($this->conf);
     }
   }
+
+
 }
 ?>

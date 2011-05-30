@@ -20,16 +20,21 @@ License: GPLv2 or later
 */
 
 
+foreach(array(
+  'vendor/Mustache',
+  'lib/okfn-utils',
+  'lib/okfn-base',
+  'lib/okfn-annot-settings',
+  'lib/okfn-annot-injector',
+
+) as $lib) require("${lib}.php");
 
 if (is_admin()) {
+  $settings = new OkfnAnnotSettings;
 
-   foreach(array(
-     'vendor/Mustache',
-     'lib/okfn-utils',
-     'lib/okfn-annot-settings',
+} else {
+  $injector = new OkfnAnnotInjector;
+  $injector->inject();
 
-   ) as $lib) require("${lib}.php");
-
-  $settings = new OkfnAnnotSettings();
 }
 ?>
