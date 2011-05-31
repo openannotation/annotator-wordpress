@@ -18,6 +18,7 @@ class OkfnAnnotSettings extends OkfnBase{
       'auth_token' => '',
       'store_uri' => '',
       'annotator_content' => '.entry-content',
+      'allow_anonymous' => 'n',
     )
   );
 
@@ -120,6 +121,10 @@ class OkfnAnnotSettings extends OkfnBase{
      $stored_value = get_option("{$prefix}-{$optname}");
      $options[$optname] = empty($stored_value) ? $value : $stored_value ;
    }
+
+   ($options['allow_anonymous'] === 'y') ?
+     $options['allow_anonymous_y'] = true :
+     $options['allow_anonymous_n'] = true ;
 
 
    $mustache = new Mustache;

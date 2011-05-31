@@ -17,6 +17,7 @@ class OkfnAnnotFactory extends OkfnBase {
   private $load_from_search;
   private $template_vars;
   private $settings;
+  private $userinfo;
   private $user_id;
   private $user_name;
 
@@ -72,9 +73,10 @@ class OkfnAnnotFactory extends OkfnBase {
    */
 
   private function get_user_id() {
-    $userinfo = wp_get_current_user();
-    return $userinfo && isset($userinfo->ID) && $userinfo->ID > 0 ?
-      $userinfo->ID :
+    if (!$this->userinfo) $this->userinfo = wp_get_current_user();
+
+    return $this->userinfo && isset($this->userinfo->ID) && $this->userinfo->ID > 0 ?
+      $this->userinfo->ID :
       $_SERVER["REMOTE_ADDR"];
   }
 
@@ -85,14 +87,14 @@ class OkfnAnnotFactory extends OkfnBase {
    *
    */
   private function get_user_name() {
-    $userinfo = wp_get_current_user();
-    $username = $userinfo && isset($userinfo->data->user_login) ?
-      $userinfo->data->user_login :
+    if (!$this->userinfo) $this->userinfo = wp_get_current_user();
+    $username = $this->userinfo && isset($this->userinfo->data->user_login) ?
+      $this->userinfo->data->user_login :
       null;
 
     //prefer nickname over loggin name
-    if ($userinfo && isset($userinfo->data) && strlen($userinfo->data->nickname)) {
-      $username = $userinfo->data->nickname;
+    if ($this->userinfo && isset($this->userinfo->data) && strlen($this->userinfo->data->nickname)) {
+      $username = $this->userinfo->data->nickname;
     }
 
     return $username;
@@ -143,7 +145,7 @@ class OkfnAnnotFactory extends OkfnBase {
     //TODO: implement conditional here
     // return only if
     //  - user is logged in OR anonymous comments are allowed
-    if (true) {
+    if ($this->allow_anonymous === 'y' or $this->userinfo->ID > 0 ) {
       return $this->render_template($this->prepare_variables());
     }
   }
