@@ -1,22 +1,38 @@
 jQuery(function ($) {
-  var element= $('{{annotator_content}}');
-  var storeConfig = {
-    prefix: 'http://annotateit.org/api'
-  };
-  var annotationData = {
-    uri: '{{uri}}',
-    account_id: '{{account_id}}'
-  },
-  authConfig = {
-  },
-  loadFromSearch = {
-    uri: '{{uri}}'
-  };
-  element.data('annotator:headers', {'x-annotator-user-id': 'afiore'});
+  var element= $('{{annotator_content}}'),
+      authToken = '{{auth_token}}',
+      accountId = '{{account_id}}',
+      uri = '{{uri}}',
+      userId = '{{user_id}}',
+      userName = '{{user_name}}',
+
+      storeConfig = {
+        prefix: 'http://annotateit.org/api'
+      },
+      userConfig = {
+        id: userId,
+        name: (userName && userName.length) ? userName : null
+      },
+      annotationData = {
+        uri: uri,
+        accountId: accountId
+      },
+      userDisplayName = userName,
+      loadFromSearch = {
+        uri: uri
+      };
+
+  element.data('annotator:headers', {
+    'x-annotator-user-id': userId,
+    'x-annotator-auth-token': authToken,
+    'x-annotator-account-id': accountId
+  });
+
 
 {{#load_limit}}
   loadFromSearch.limit = {{load_limit}};
 {{/load_limit}}
+
 
   if (element) {
 
@@ -26,12 +42,29 @@ jQuery(function ($) {
     element.annotator()
            .annotator('addPlugin','Store', storeConfig)
            .annotator('addPlugin','Tags')
-           .annotator('addPlugin','Permissions');
+           .annotator('addPlugin','Permissions', {
+             'user': userConfig,
+             'userString': function (user) {
+               if (user && user.name) {
+                 return user.name;
+               }
 
-    element.data('annotator').plugins['Permissions'].setUser("afiore");
+               return user.id;
+             },
+
+             // todo: implement groups and allow admins 
+             // to delete annotations
+             'permissions': {
+               'read': [],
+               'update': [userId],
+               'delete': [userId],
+               'admin':  [userId]
+             }
+           });
+
 
   } else {
-    throw new Error("OkfnAnnotator: Unable to find a DOM element for selector {{annotator_content}}; cannot instantiate the Annotator");
+    throw new Error("OkfnAnnotator: Unable to find a DOM element for selector '{{annotator_content}}'; cannot instantiate the Annotator");
   }
 
 });

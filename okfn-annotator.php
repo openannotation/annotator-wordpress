@@ -21,6 +21,7 @@ License: GPLv2 or later
 
 
 foreach(array(
+  'lib/wp-pluggable',
   'vendor/Mustache',
   'lib/okfn-utils',
   'lib/okfn-base',
@@ -28,7 +29,7 @@ foreach(array(
   'lib/okfn-annot-injector',
   'lib/okfn-annot-factory',
 
-) as $lib) require("${lib}.php");
+) as $lib) require_once("${lib}.php");
 
 $settings = new OkfnAnnotSettings;
 
@@ -37,4 +38,5 @@ if (!is_admin()) {
   $injector = new OkfnAnnotInjector($factory);
   $injector->inject();
 }
+
 ?>

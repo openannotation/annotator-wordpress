@@ -8,7 +8,6 @@
  */
 
 class OkfnAnnotFactory extends OkfnBase {
-  private $user_id;
   private $accountid;
   private $store_uri;
   private $uri; //current wordpress page
@@ -17,6 +16,8 @@ class OkfnAnnotFactory extends OkfnBase {
   private $load_from_search;
   private $template_vars;
   private $settings;
+  private $user_id;
+  private $user_name;
 
   /*
    * Public:
@@ -31,7 +32,6 @@ class OkfnAnnotFactory extends OkfnBase {
     $this->settings = $settings;
 
     foreach(array(
-      'user_id',
       'accountid',
       'store_uri',
       'annotator_content',
@@ -43,7 +43,11 @@ class OkfnAnnotFactory extends OkfnBase {
 
     //todo: add load from search
     $this->uri = $this->get_current_uri();
+    $this->user_id = $this->get_user_id();
+    $this->user_name = $this->get_user_name();
+
   }
+
 
   /*
    *
@@ -54,9 +58,43 @@ class OkfnAnnotFactory extends OkfnBase {
    */
 
   private function get_current_uri(){
-    return 'http://' .
-      preg_replace('/\/$/', '', $_SERVER['HTTP_HOST']) .
+    return 'http://' . preg_replace('/\/$/', '', $_SERVER['HTTP_HOST']) .
       $_SERVER['REQUEST_URI'];
+  }
+
+  /*
+   * Gets the logged in user id or the anonymous visitor IP address.
+   *
+   * returns a string
+   *
+   */
+
+  private function get_user_id() {
+    $userinfo = wp_get_current_user();
+    return $userinfo && isset($userinfo->ID) && $userinfo->ID > 0 ?
+      $userinfo->ID :
+      $_SERVER["REMOTE_ADDR"];
+  }
+
+  /*
+   * Gets the user display name.
+   *
+   * returns a string or null if the user is not logged in
+   *
+   */
+  private function get_user_name() {
+    $userinfo = wp_get_current_user();
+    $username = $userinfo && isset($userinfo->data->user_login) ?
+      $userinfo->data->user_login :
+      null;
+
+    //prefer nickname over loggin name
+    if ($userinfo && isset($userinfo->data) && strlen($userinfo->data->nickname)) {
+      $username = $userinfo->data->nickname;
+    }
+
+    return $username;
+
   }
 
   /*
@@ -77,8 +115,9 @@ class OkfnAnnotFactory extends OkfnBase {
 
   private function prepare_variables(){
     $template_vars = array(
-      'accountid'  => $this->accountid,
+      'account_id'  => $this->accountid,
       'user_id' => $this->user_id,
+      'user_name' => $this->user_name,
       'annotator_content' => $this->annotator_content,
       'uri' => $this->uri,
       'load_limit' => -1,
@@ -105,7 +144,5 @@ class OkfnAnnotFactory extends OkfnBase {
       return $this->render_template($this->prepare_variables());
     }
   }
-
-
 }
 ?>

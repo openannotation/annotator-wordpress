@@ -54,7 +54,6 @@ class OkfnAnnotSettings extends OkfnBase{
    */
 
   function register_menu() {
-    echo 'registering menu';
     add_options_page(
       $this->conf->settings_page_title,
       $this->conf->menu_item_title,
