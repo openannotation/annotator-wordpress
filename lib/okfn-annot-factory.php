@@ -9,6 +9,7 @@
 
 class OkfnAnnotFactory extends OkfnBase {
   private $accountid;
+  private $auth_token;
   private $store_uri;
   private $uri; //current wordpress page
   private $allow_anonymous;
@@ -34,6 +35,7 @@ class OkfnAnnotFactory extends OkfnBase {
     foreach(array(
       'accountid',
       'store_uri',
+      'auth_token',
       'annotator_content',
       'allow_anonymous',
 
@@ -116,6 +118,7 @@ class OkfnAnnotFactory extends OkfnBase {
   private function prepare_variables(){
     $template_vars = array(
       'account_id'  => $this->accountid,
+      'auth_token'  => $this->auth_token,
       'user_id' => $this->user_id,
       'user_name' => $this->user_name,
       'annotator_content' => $this->annotator_content,
