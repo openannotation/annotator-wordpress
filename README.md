@@ -22,13 +22,13 @@ Just `git clone` this project into the `wp-content/plugins/` directory, then
 activate the plugin through the Wordpress administration panel accessible at `http://<blogaddress>/wp-admin/plugins.php`.
 
 You will also need to sign up at [AnnotateIt](http://annotateti.org) and 
-fill in your _Account ID_ and _Auth Token_ details in the Plugin settings
+fill your _Account ID_ and _Auth Token_ details in the Plugin settings
 form.
 
 
 ## Demo
 
-A blog post showing the plugin in action can be found [here](http://wp-annotator.andreafiore.me/). The plugin settings for this specific installation are depicted in the screenshot below:
+A blog post showing the plugin in action can be found [here]([http://wp-annotator.andreafiore.me/2011/05/26/hello-world/]). The plugin settings for this specific installation are depicted in the screenshot below:
 
 <img src="https://github.com/okfn/annotator-wordpress/raw/master/screenshot.png" alt="wp-annotator settings screenshot" />
 
