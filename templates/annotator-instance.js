@@ -46,7 +46,9 @@ jQuery(function ($) {
            .annotator('addPlugin','Permissions', {
              'user': userConfig,
              'userAuthorize': function (user, token) {
-               return user.id === token;
+               if (user && user.id) {
+                 return user.id === token;
+               }
              },
              'userString': function (user) {
                if (user && user.name) {
