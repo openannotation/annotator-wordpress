@@ -39,11 +39,15 @@ jQuery(function ($) {
     storeConfig.annotationData = annotationData;
     storeConfig.loadFromSearch = loadFromSearch;
 
+
     element.annotator()
            .annotator('addPlugin','Store', storeConfig)
            .annotator('addPlugin','Tags')
            .annotator('addPlugin','Permissions', {
              'user': userConfig,
+             'userAuthorize': function (user, token) {
+               return user.id === token;
+             },
              'userString': function (user) {
                if (user && user.name) {
                  return user.name;
