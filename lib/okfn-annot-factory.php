@@ -61,8 +61,7 @@ class OkfnAnnotFactory extends OkfnBase {
    */
 
   private function get_current_uri(){
-    return 'http://' . preg_replace('/\/$/', '', $_SERVER['HTTP_HOST']) .
-      $_SERVER['REQUEST_URI'];
+    return OkfnUtils::current_url();
   }
 
   /*

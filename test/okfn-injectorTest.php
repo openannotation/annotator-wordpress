@@ -6,10 +6,18 @@ class OkfnAnnotInjectorTest extends OkfnTestCase {
     'load_javascript_dependencies',
     'print_snippet'
   );
+  private $constructor_arguments;
+
+  protected function setUp() {
+    $this->constructor_arguments = array(
+      $this->mockHelper('OkfnAnnotSettings',array(),array(),false),
+      $this->mockHelper('OkfnAnnotContentPolicy',array('url_is_annotable'),array(),false)
+    );
+  }
 
 
   public function testAllAssetPathsShouldBeCorrect(){
-    $injector = new OkfnAnnotInjector(new stdClass);
+    $injector = new OkfnAnnotInjector(new stdClass, new stdClass);
     $conf = $injector->get_conf();
 
     foreach(array('javascripts', 'stylesheets') as $asset_type) {
@@ -20,7 +28,12 @@ class OkfnAnnotInjectorTest extends OkfnTestCase {
   }
 
   public function testShouldLoadJavascriptDependencies() {
-    $injector_mock = $this->mockHelper('OkfnAnnotInjector',$this->methods_to_mock,array(new stdClass));
+    list($settings_mock,  $content_policy_mock) = $this->constructor_arguments;
+    $injector_mock = $this->mockHelper('OkfnAnnotInjector', $this->methods_to_mock, $this->constructor_arguments);
+
+    $content_policy_mock->expects($this->any())
+          ->method('url_is_annotable')
+          ->will($this->returnValue(true));
 
     $injector_mock->expects($this->once())
          ->method('load_javascript_dependencies');
@@ -28,8 +41,17 @@ class OkfnAnnotInjectorTest extends OkfnTestCase {
     $injector_mock->inject();
   }
 
+
   public function testShouldLoadCorrectlyBothJavascriptAndStylesheetAssets() {
-    $injector_mock = $this->mockHelper('OkfnAnnotInjector',$this->methods_to_mock, array(new stdClass));
+    list($settings_mock,  $content_policy_mock) = $this->constructor_arguments;
+    $injector_mock = $this->mockHelper('OkfnAnnotInjector',$this->methods_to_mock, $this->constructor_arguments);
+
+
+    $content_policy_mock->expects($this->any())
+          ->method('url_is_annotable')
+          ->will($this->returnValue(true));
+
+
 
     /*
      * NOTE: The value of the at() index does not refer the value of ->method(), but to stack of all the different 
@@ -71,7 +93,22 @@ class OkfnAnnotInjectorTest extends OkfnTestCase {
     $injector_mock->inject();
   }
 
+  public function testShouldRespectTheUserDefiendPolicy(){
+    list($settings_mock,  $content_policy_mock) = $this->constructor_arguments;
+    $mock_methods = array_merge($this->methods_to_mock, array('load_stylesheets','load_javascripts'));
 
+    $injector_mock = $this->mockHelper('OkfnAnnotInjector',$mock_methods, $this->constructor_arguments);
+
+
+    $content_policy_mock->expects($this->any())
+          ->method('url_is_annotable')
+          ->will($this->returnValue(false));
+
+    foreach($mock_methods as $method) {
+      $injector_mock->expects($this->never())
+            ->method($method);
+    }
+  }
 
 }
 ?>

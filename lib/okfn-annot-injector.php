@@ -34,7 +34,7 @@ class OkfnAnnotInjector extends OkfnBase {
   private $factory;
   private $content_policy;
 
-  function __construct($factory,$content_policy=null){
+  function __construct($factory,$content_policy){
     parent::__construct();
 
     $this->factory = $factory;
@@ -158,9 +158,11 @@ class OkfnAnnotInjector extends OkfnBase {
   }
 
   function inject() {
-    add_action('wp_print_styles', array($this,'load_stylesheets'));
-    add_action('wp_print_scripts', array($this,'load_javascripts'));
-    add_action('wp_footer', array($this,'print_snippet'));
+    if ($this->content_policy->url_is_annotable()) {
+      add_action('wp_print_styles', array($this,'load_stylesheets'));
+      add_action('wp_print_scripts', array($this,'load_javascripts'));
+      add_action('wp_footer', array($this,'print_snippet'));
+    }
     //todo: add content policy here...
   }
 }

@@ -102,6 +102,19 @@ class OkfnUtils {
     return "{$prefix}{$id}";
   }
 
+  /*
+   * Gets the current page URL.
+   *
+   *
+   * Returns a URL string.
+   *
+   */
+
+  static function current_url() {
+    return 'http://' . preg_replace('/\/$/', '', $_SERVER['HTTP_HOST']) .
+      $_SERVER['REQUEST_URI'];
+  }
+
 }
 
 ?>
