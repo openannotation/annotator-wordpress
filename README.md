@@ -1,15 +1,16 @@
 # Annotator plugin for Wordpress
 
-Adds inline annotations to Wordpress using the amazing 
-[Annotator](http://github.com/okfn/annotator) widget (by Open Knowledge Foundation).
+Adds inline annotations to Wordpress using the 
+[Annotator](http://github.com/okfn/annotator) widget (by the Open Knowledge Foundation).
 
 ## Features
 
 - Includes the Annotator JavaScript code and its third party
   party dependencies (i.e. `jquery.js`, and `json2.js`) into the currently active theme (no HTML editing needed).
-- Provides the option to configure the annotable content area from the Wordpress settings page.
-- Provides blog administrators with the option to decide whether to display only authenticated users' annotations or also the one made by anonymous users.
+- Offers the option to configure the annotable content area from the Wordpress settings page.
+- Provides blog administrators with the option to decide whether to display only authenticated users' annotations or also annotations made by anonymous users.
 - Provides a rudimentary regular expressions' based mechanism for configuring in what pages/blog sections the Annotator widget should be included.
+
 
 ## Requirements
 
@@ -17,11 +18,18 @@ PHP >= 5.\*.\*
 
 ## Install
 
-Just 'git clone' this project into the `wp-content/plugins/`, then activate the plugin through the Wordpress administration panel accessible at http://<blogaddress>/wp-admin/plugins.php.
+Just 'git clone' this project into the `wp-content/plugins/`, then
+activate the plugin through the Wordpress administration panel
+accessible at http://<blogaddress>/wp-admin/plugins.php.
+
+You will also need to sign up at [AnnotateIt](http://annotateti.org) and 
+fill  in your account id and authentication token in the Plugin settings
+page.
+
 
 ## Demo
 
-A blog post showing the plugin in action be found [here](http://wp-annotator.andreafiore.me/). The settings plugin settings of this specific installation shown in the screenshot below:
+A blog post showing the plugin in action be found [here](http://wp-annotator.andreafiore.me/). The plugin settings this specific installation are depicted in the screenshot below:
 
 <img src="https://github.com/okfn/annotator-wordpress/raw/master/screenshot.png" width="638" height="431" alt="wp-annotator settings screenshot" />
 
