@@ -21,8 +21,8 @@ class OkfnAnnotContentPolicy extends OkfnBase {
    */
   public function __construct($settings) {
     $this->settings = $settings;
-    $pattern = $settings->get_option('url_pattern');
-    $this->url_pattern = empty($pattern) ?  '.*' : preg_quote($pattern);
+    $pattern = stripslashes($settings->get_option('url_pattern'));
+    $this->url_pattern = empty($pattern) ?  '.*' : $pattern;
   }
 
   /*
@@ -34,8 +34,9 @@ class OkfnAnnotContentPolicy extends OkfnBase {
    *
    */
   function url_is_annotable($url=null) {
-    $url or $url = OkfnBase::current_url();
-    return preg_match("/" . $this->url_pattern . "/", $url);
+    $url or $url = OkfnUtils::current_url();
+    $match= preg_match("/" . $this->url_pattern . "/", $url);
+    return $match;
   }
 
 }

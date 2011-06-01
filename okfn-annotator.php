@@ -26,6 +26,7 @@ foreach(array(
   'lib/okfn-utils',
   'lib/okfn-base',
   'lib/okfn-annot-settings',
+  'lib/okfn-annot-content-policy',
   'lib/okfn-annot-injector',
   'lib/okfn-annot-factory',
 
@@ -35,7 +36,8 @@ $settings = new OkfnAnnotSettings;
 
 if (!is_admin()) {
   $factory  = new OkfnAnnotFactory($settings);
-  $injector = new OkfnAnnotInjector($factory);
+  $content_policy  = new OkfnAnnotContentPolicy($settings);
+  $injector = new OkfnAnnotInjector($factory, $content_policy);
   $injector->inject();
 }
 

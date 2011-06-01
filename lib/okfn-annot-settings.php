@@ -17,6 +17,7 @@ class OkfnAnnotSettings extends OkfnBase{
       'accountid' => '',
       'auth_token' => '',
       'store_uri' => '',
+      'url_pattern' => '.*',
       'annotator_content' => '.entry-content',
       'allow_anonymous' => 'n',
     )
@@ -107,6 +108,7 @@ class OkfnAnnotSettings extends OkfnBase{
   */
 
  function render_settings_form($is_submit=false) {
+
    $prefix = $this->conf->forminput_prefix;
 
    $options = array(
@@ -122,10 +124,13 @@ class OkfnAnnotSettings extends OkfnBase{
      $options[$optname] = empty($stored_value) ? $value : $stored_value ;
    }
 
+   //radio button selected attribute
    ($options['allow_anonymous'] === 'y') ?
      $options['allow_anonymous_y'] = true :
      $options['allow_anonymous_n'] = true ;
 
+   //unescape backslashes automatically added by php for string sanitation
+   $options['url_pattern'] = stripslashes($options['url_pattern']);
 
    $mustache = new Mustache;
    $template = OkfnUtils::get_template('settings.html');

@@ -49,7 +49,7 @@
 
        <tr valign="top">
  		<th scope="row">
-		  <label for="{{prefix}}-url_pattern">Url inclusion pattern <small>(Perl style regexp)</small></label>
+		  <label for="{{prefix}}-url_pattern">URL inclusion pattern <small>A regex with no delimiters</small></label>
  	    </th>
  		<td>
  	      <input type="text" name="{{prefix}}-url_pattern" id="{{prefix}}-url_pattern" value="{{url_pattern}}" />
@@ -57,11 +57,30 @@
  	  </tr>
 	</tbody>
    </table>
+	  <p>
+   	     <h5>URL pattern examples</h5>
+   	     <ul id="regex-examples">
+			<li><a href="#" data-regex="(\d{4})\/(\d{2})\/(\d{2})\/(.*)$" title="click to insert">All blog posts (excluding indexes) </a></li>
+   	   		<li><a href="#" data-regex="\/category\/foo/?$" title="click to insert">All index pages for category foo</a></li>
+   	   		<li><a href="#" data-regex="\/tag\/bar?/$" title="click to insert">All index pages for tag bar </a></li>
+   	   		<li><a href="#" data-regex=".*" title="click to insert">All pages </a></li>
+   	     </ul>
+   	  </p>
    </p>
-
    <p class="submit">
     <input type="hidden" name="{{submit_name}}" value="true" />
 	<input type="submit" name="submit" value="{{submit_value}}" />
 	</p>
   </form>
 </div>
+<script>
+//<![CDATA[
+jQuery(function($){
+  $('#regex-examples').delegate('a', 'click', function(event){
+    event.preventDefault();
+    var regex = $(this).data('regex');
+	$("#{{prefix}}-url_pattern").val(regex);
+  });
+});
+//]]>
+</script>
