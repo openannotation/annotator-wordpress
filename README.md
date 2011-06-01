@@ -23,7 +23,7 @@ activate the plugin through the Wordpress administration panel
 accessible at http://<blogaddress>/wp-admin/plugins.php.
 
 You will also need to sign up at [AnnotateIt](http://annotateti.org) and 
-fill  in your account id and authentication token in the Plugin settings
+fill in your _Account ID_ and _Auth Token_ details in the Plugin settings
 page.
 
 
@@ -31,7 +31,7 @@ page.
 
 A blog post showing the plugin in action be found [here](http://wp-annotator.andreafiore.me/). The plugin settings this specific installation are depicted in the screenshot below:
 
-<img src="https://github.com/okfn/annotator-wordpress/raw/master/screenshot.png" width="638" height="431" alt="wp-annotator settings screenshot" />
+<img src="https://github.com/okfn/annotator-wordpress/raw/master/screenshot.png" alt="wp-annotator settings screenshot" />
 
 
 ### Bugs and feature requests
