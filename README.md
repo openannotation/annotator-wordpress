@@ -23,7 +23,7 @@ Just 'git clone' this project into the `wp-content/plugins/`, then activate the 
 
 A blog post showing the plugin in action be found [here](http://wp-annotator.andreafiore.me/). The settings plugin settings of this specific installation shown in the screenshot below:
 
-<img src="https://github.com/okfn/wordpress-annotator/raw/master/screenshot.png" alt="WaybackFox screenshot" />
+<img src="https://github.com/okfn/annotator-wordpress/raw/master/screenshot.png" width="638" height="431" alt="wp-annotator settings screenshot" />
 
 
 ### Bugs and feature requests
