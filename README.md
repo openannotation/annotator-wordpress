@@ -28,7 +28,7 @@ form.
 
 ## Demo
 
-A blog post showing the plugin in action can be found [here]([http://wp-annotator.andreafiore.me/2011/05/26/hello-world/]). The plugin settings for this specific installation are depicted in the screenshot below:
+A blog post showing the plugin in action can be found [here](http://wp-annotator.andreafiore.me/2011/05/26/hello-world/). The plugin settings for this specific installation are depicted in the screenshot below:
 
 <img src="https://github.com/okfn/annotator-wordpress/raw/master/screenshot.png" alt="wp-annotator settings screenshot" />
 
