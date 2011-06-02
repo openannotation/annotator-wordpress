@@ -24,4 +24,18 @@ function add_action($action, $callback) {
   call_user_func($callback);
 }
 
+
+
+
+/*
+ * Mocks wordpress' internal function for fetching user data.
+ *
+ * returns the value of the global variable okfn_test_user;
+ */
+
+function wp_get_current_user() {
+  global $okfn_fixtures;
+  return $okfn_fixtures->current_user;
+}
+
 ?>

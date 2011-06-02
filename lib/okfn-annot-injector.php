@@ -81,9 +81,10 @@ class OkfnAnnotInjector extends OkfnBase {
 
   /*
    * Ensures that libraries are registered with the '.{js|css}' and not the '.min.{js|css}' prefix
-   * prefix
    *
    * path - a relative path to an asset
+   *
+   * returns the asset id (stripped of the '.min' fragment ).
    *
    */
   function asset_id($path) {
@@ -92,7 +93,7 @@ class OkfnAnnotInjector extends OkfnBase {
 
 
   /*
-   * Wrapper for for wp_enqueue_{style|script}
+   * Wrapper for wp_enqueue_{style|script}
    *
    * This has been implemented only for mocking/testing purposes.
    *
@@ -163,7 +164,6 @@ class OkfnAnnotInjector extends OkfnBase {
       add_action('wp_print_scripts', array($this,'load_javascripts'));
       add_action('wp_footer', array($this,'print_snippet'));
     }
-    //todo: add content policy here...
   }
 }
 ?>

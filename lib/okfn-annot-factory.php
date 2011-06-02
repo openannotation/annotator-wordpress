@@ -26,7 +26,7 @@ class OkfnAnnotFactory extends OkfnBase {
    *
    * Class constructor
    *
-   * $settings - an instance of OkfnAnnotSettings
+   * settings - an instance of OkfnAnnotSettings.
    *
    */
 
@@ -87,6 +87,7 @@ class OkfnAnnotFactory extends OkfnBase {
    */
   private function get_user_name() {
     if (!$this->userinfo) $this->userinfo = wp_get_current_user();
+
     $username = $this->userinfo && isset($this->userinfo->data->user_login) ?
       $this->userinfo->data->user_login :
       null;
@@ -141,10 +142,7 @@ class OkfnAnnotFactory extends OkfnBase {
    */
 
   function create_snippet() {
-    //TODO: implement conditional here
-    // return only if
-    //  - user is logged in OR anonymous comments are allowed
-    if ($this->allow_anonymous === 'y' or $this->userinfo->ID > 0 ) {
+    if ($this->allow_anonymous === 'y' || $this->userinfo->ID > 0 ) {
       return $this->render_template($this->prepare_variables());
     }
   }
