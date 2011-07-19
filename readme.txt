@@ -1,16 +1,19 @@
-=== Plugin Name ===
+=== Annotator for Wordpress ===
 Contributors: a-fiore
-Tags: annotation
+Tags: annotation, okf, annotate.it
 Requires at least: 3.2.0
 Tested up to: 3.2.0
-Stable tag: 0.1
+Stable tag: 0.2
 
 Adds inline annotations to Wordpress using the Open Knowledge
 Foundation's Annotator tool.
 
 == Description ==
 
-- Includes the Annotator JavaScript code and its third party
+
+## Features
+
+- Automatically includes the Annotator JavaScript code and its third party
   party dependencies (i.e. `jquery.js`, and `json2.js`) into the currently active theme (no HTML editing needed).
 - Offers the option to configure the annotable content area from the Wordpress settings page.
 - Provides blog administrators with the option to decide whether to display only authenticated users' annotations or also annotations made by anonymous users.
