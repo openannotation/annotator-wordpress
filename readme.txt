@@ -1,4 +1,4 @@
-=== Annotator for Wordpress ===
+=== Annotator ===
 Contributors: a-fiore
 Tags: annotation, okf, annotate.it
 Requires at least: 3.2.0
