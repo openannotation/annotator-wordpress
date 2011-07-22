@@ -13,7 +13,7 @@
 Plugin Name: Open Knowledge Foundation's Annotator
 Plugin URI: https://github.com/okfn/annotator-wordpress
 Description: Adds inline annotations to Wordpress using the amazing <a href="http://annotateit.org">Annotator</a> widget (by the Open Knowledge Foundation).
-Version: 0.2
+Version: 0.3
 Author: Open Knowledge Foundation
 Author URI: http://okfn.org/projects/annotator/
 License: GPLv2 or later

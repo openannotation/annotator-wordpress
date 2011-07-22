@@ -3,7 +3,7 @@ Contributors: a-fiore
 Tags: annotation, okf, annotate.it
 Requires at least: 3.2.0
 Tested up to: 3.2.0
-Stable tag: 0.2
+Stable tag: 0.3
 
 Adds inline annotations to Wordpress using the Open Knowledge
 Foundation's Annotator tool.
