@@ -3,7 +3,7 @@
  * Handles user defined policies about what content should be annotable.
  *
  * The only user setting currently available to define the Annotator content policy
- * is the the "Url inclusion pattern" regular expression. In the future we might want 
+ * is the the "Url inclusion pattern" regular expression. In the future we might want
  * to provide a more user friendly and fine grained mechanism.
  *
  */

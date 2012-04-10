@@ -1,95 +1,62 @@
 <div class="wrap">
   <div class="icon32" id="icon-options-general"><br></div>
-  <h2>OKFN Annotator</h2>
+  <h2>Annotator</h2>
 
   {{#form_submitted}}
-  <div class="updated settings-error" id="setting-error-settings_updated"> 
+  <div class="updated settings-error" id="setting-error-settings_updated">
     <p><strong>Settings saved.</strong></p>
   </div>
   {{/form_submitted}}
 
-  <h3>User account</h3>
-  <small>
-    Sign up on <a href="http://annotateit.org/" target="_blank">AnnotateIt</a> and
-	fill in your <em>account ID</em> and <em>Auth Token</em> below.
-  </small>
   <form name="{{prefix}}" method="post" action="{{action}}">
- 	<table class="form-table">
- 	  <tbody>
- 	  <tr valign="top">
- 		<th scope="row"><label for="{{prefix}}-accountid">Accound Id</label></th>
- 		<td>
- 		   <input type="text" name="{{prefix}}-accountid" id="{{prefix}}-accountid" value="{{accountid}}"/>
- 		 </td>
- 	  </tr>
-       <tr valign="top">
- 		<th scope="row">
-		  <label for="{{prefix}}-auth_token">Auth Token </label>
- 	    </th>
- 		<td>
- 	      <input type="text" name="{{prefix}}-auth_token" id="{{prefix}}-auth_token" value="{{auth_token}}" />
- 		</td>
- 	  </tr>
-	</tbody>
-   </table>
-   <p>
-     <h3>Embedding options</h3>
- 	<table class="form-table">
- 	  <tbody>
-		<tr valign="top">
-		<th scope="row"><label
-			for="{{prefix}}-annotator_content">Content area <br/><small>
-			  CSS3 selector specifying the annotable area of the page.</small></label></th>
- 		<td>
- 		   <input type="text" name="{{prefix}}-annotator_content" id="{{prefix}}-annotator_content" value="{{annotator_content}}"/>
- 		 </td>
-	  </tr>
-	  <tr valign="top">
-		<th scope="row"><label for="{{prefix}}-allow_anonymous_n">Allow anonymous annotations</label></th>
- 		<td>
-		  <input type="radio" name="{{prefix}}-allow_anonymous" id="{{prefix}}-allow_anonymous-n" value="n" {{#allow_anonymous_n}}checked="checked"{{/allow_anonymous_n}}> No
-		  <input type="radio" name="{{prefix}}-allow_anonymous" id="{{prefix}}-allow_anonymous-y" value="y"  {{#allow_anonymous_y}}checked="checked"{{/allow_anonymous_y}}/> Yes
- 		 </td>
-	   </tr>
 
+    <h3>Embedding options</h3>
+    <table class="form-table">
+      <tbody>
+        <tr valign="top">
+          <th scope="row">
+            <label for="{{prefix}}-annotator_content">Content area <br/>
+              <small>CSS selector specifying the annotatable area of the page.</small>
+            </label>
+          </th>
+          <td>
+            <input type="text" name="{{prefix}}-annotator_content" id="{{prefix}}-annotator_content" value="{{annotator_content}}"/>
+          </td>
+        </tr>
 
-       <tr valign="top">
- 		<th scope="row">
-		  <label for="{{prefix}}-url_pattern">URL inclusion pattern
-			<br/>
-			<small>A regular expression matching the URLs of the pages/
-			  blog sections where the Annotator should be included.</small></label>
- 	    </th>
- 		<td>
- 	      <input type="text" name="{{prefix}}-url_pattern" id="{{prefix}}-url_pattern" value="{{url_pattern}}" />
- 		</td>
- 	  </tr>
-	</tbody>
-   </table>
-	  <p>
-   	     <h5>URL pattern examples</h5>
-   	     <ul id="regex-examples">
-			<li><a href="#"
-			  data-regex="(\d{4})\/(\d{2})\/(\d{2})\/(.*)$" title="click to insert">All blog posts (excluding index pages) </a></li>
-   	   		<li><a href="#" data-regex="\/category\/foo/?$" title="click to insert">All index pages for category 'foo'</a></li>
-   	   		<li><a href="#" data-regex="\/tag\/bar?/$" title="click to insert">All index pages for tag 'bar' </a></li>
-   	   		<li><a href="#" data-regex=".*" title="click to insert">All pages </a></li>
-   	     </ul>
-   	  </p>
-   </p>
-   <p class="submit">
-    <input type="hidden" name="{{submit_name}}" value="true" />
-	<input type="submit" name="submit" value="{{submit_value}}" />
-	</p>
+        <tr valign="top">
+          <th scope="row">
+            <label for="{{prefix}}-url_pattern">URL inclusion pattern
+              <br/>
+              <small>A regular expression matching the URLs of the pages/blog sections where the Annotator should be included.</small>
+            </label>
+          </th>
+          <td>
+            <input type="text" name="{{prefix}}-url_pattern" id="{{prefix}}-url_pattern" value="{{url_pattern}}" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h5>URL pattern examples</h5>
+    <ul id="regex-examples">
+      <li><a href="#" data-regex="(\d{4})\/(\d{2})\/(\d{2})\/(.*)$" title="click to insert">All blog posts (excluding index pages) </a></li>
+      <li><a href="#" data-regex="\/category\/foo/?$" title="click to insert">All index pages for category 'foo'</a></li>
+      <li><a href="#" data-regex="\/tag\/bar?/$" title="click to insert">All index pages for tag 'bar' </a></li>
+      <li><a href="#" data-regex=".*" title="click to insert">All pages </a></li>
+    </ul>
+    <p class="submit">
+      <input type="hidden" name="{{submit_name}}" value="true" />
+      <input type="submit" name="submit" value="{{submit_value}}" />
+    </p>
   </form>
 </div>
 <script>
 //<![CDATA[
 jQuery(function($){
-  $('#regex-examples').delegate('a', 'click', function(event){
+  $('#regex-examples').on('click', 'a', function(event){
     event.preventDefault();
-    var regex = $(this).data('regex');
-	$("#{{prefix}}-url_pattern").val(regex);
+    $("#{{prefix}}-url_pattern").val($(this).data('regex'));
   });
 });
 //]]>

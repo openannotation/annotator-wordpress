@@ -28,10 +28,7 @@ class OkfnAnnotFactoryTest extends OkfnTestCase {
     global $okfn_fixtures;
 
     $okfn_fixtures->settings = (object) array(
-      'accountid' => 'foo',
-      'auth_token' => 'bar',
       'annotator_content' => '.a-selector',
-      'allow_anonymous' => 'n',
     );
 
     $okfn_fixtures->current_user = (object) array(
@@ -55,26 +52,11 @@ class OkfnAnnotFactoryTest extends OkfnTestCase {
   }
 
 
-  function testShouldNotCreateTheSnippetIfUserIsNotLoggedInAndAnonymousAnnotationsAreNotAllowed() {
-
+  function testCreateSnippet() {
     $factory_mock = $this->getMock('OkfnAnnotFactory', array('render_template'), array($this->settings_mock));
-    $factory_mock->expects($this->never())
-                 ->method('render_template');
-
-    $this->assertNull($factory_mock->create_snippet());
-  }
-
-
-  function testShouldInsteadCreateTheSnippetIfUserIsNotLoggedInButAnonymousAnnotationsAreAllowed() {
-    global $okfn_fixtures;
-    $okfn_fixtures->current_user->ID = 1;
-
-    $factory_mock = $this->getMock('OkfnAnnotFactory', array('render_template'), array($this->settings_mock));
-    $factory_mock->expects($this->once())
-                 ->method('render_template');
+    $factory_mock->expects($this->once())->method('render_template');
 
     $factory_mock->create_snippet();
   }
-
 }
 ?>

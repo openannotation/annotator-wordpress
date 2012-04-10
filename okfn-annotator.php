@@ -3,6 +3,7 @@
 /**
  * @package OkfnAnnotator
  * @author Andrea Fiore
+ * @author Nick Stenning
  *
  * Main plugin controller
  *
@@ -10,10 +11,10 @@
 
 
 /*
-Plugin Name: Open Knowledge Foundation's Annotator
+Plugin Name: Annotator
 Plugin URI: https://github.com/okfn/annotator-wordpress
 Description: Adds inline annotations to Wordpress using the amazing <a href="http://annotateit.org">Annotator</a> widget (by the Open Knowledge Foundation).
-Version: 0.3
+Version: 0.4
 Author: Open Knowledge Foundation
 Author URI: http://okfn.org/projects/annotator/
 License: GPLv2 or later
@@ -29,7 +30,6 @@ foreach(array(
   'lib/okfn-annot-content-policy',
   'lib/okfn-annot-injector',
   'lib/okfn-annot-factory',
-
 ) as $lib) require_once("${lib}.php");
 
 $settings = new OkfnAnnotSettings;

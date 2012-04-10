@@ -54,7 +54,7 @@ class OkfnAnnotInjectorTest extends OkfnTestCase {
 
 
     /*
-     * NOTE: The value of the at() index does not refer the value of ->method(), but to stack of all the different 
+     * NOTE: The value of the at() index does not refer the value of ->method(), but to stack of all the different
      * method calls done by the mocked object (which sucks...).
      *
      */
@@ -93,7 +93,7 @@ class OkfnAnnotInjectorTest extends OkfnTestCase {
     $injector_mock->inject();
   }
 
-  public function testShouldRespectTheUserDefiendPolicy(){
+  public function testShouldRespectTheUserDefinedPolicy(){
     list($settings_mock,  $content_policy_mock) = $this->constructor_arguments;
     $mock_methods = array_merge($this->methods_to_mock, array('load_stylesheets','load_javascripts'));
 

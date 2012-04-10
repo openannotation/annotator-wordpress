@@ -12,7 +12,7 @@ class OkfnAnnotInjector extends OkfnBase {
   public $conf = array(
     'assets_basepath' => '/vendor/',
 
-    // In the sake of semplicity for now we only support the full minified version
+    // In the sake of simplicity for now we only support the full minified version
     // of the annotator (A more fine grained control through the settings can be implemented later).
 
     'javascripts' => array(
@@ -129,13 +129,10 @@ class OkfnAnnotInjector extends OkfnBase {
 
   private function load_assets($javascripts_or_stylesheets) {
     foreach($this->conf->$javascripts_or_stylesheets as $asset) {
-
-      $assid= $this->asset_id($asset->file);
-
       $in_footer = isset($asset->in_footer) && $asset->in_footer;
       $this->wp_enqueue_asset(
         $this->asset_id($asset->file),
-        "{$this->conf->assets_basepath}/{$asset->file}",
+        "{$this->conf->assets_basepath}{$asset->file}",
         isset($asset->dependencies) ? $asset->dependencies : array(),
         false,
         $in_footer,

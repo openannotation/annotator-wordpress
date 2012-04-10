@@ -1,5 +1,5 @@
 <?php
-class OkfnAnnotSettings extends OkfnBase{
+class OkfnAnnotSettings extends OkfnBase {
 
   /*
    * Class configuration variables
@@ -7,19 +7,15 @@ class OkfnAnnotSettings extends OkfnBase{
    */
   protected $conf = array(
     'forminput_prefix' => 'okfn-annot',
-    'settings_page_title' => 'OKFN Annotator settings',
-    'menu_item_title' => 'OKFN Annotator',
+    'settings_page_title' => 'Annotator settings',
+    'menu_item_title' => 'Annotator',
     'menu_item_identifier' => 'okfn-annotator',
     'submit_parameter_name' => 'okfn-annotsettings-submit',
 
     //options exposed to the user and stored in wordpress settings
     'default_options' => array(
-      'accountid' => '',
-      'auth_token' => '',
-      'store_uri' => '',
-      'url_pattern' => '.*',
       'annotator_content' => '.entry-content',
-      'allow_anonymous' => 'n',
+      'url_pattern' => '.*',
     )
   );
 
@@ -85,16 +81,17 @@ class OkfnAnnotSettings extends OkfnBase{
   *
   */
 
- function process_settings_form($params){
-   $prefix = $this->conf->forminput_prefix;
-   $options=OkfnUtils::filter_by_regexp("/^{$prefix}-/", $params);
+  function process_settings_form($params){
+    $prefix = $this->conf->forminput_prefix;
+    $options=OkfnUtils::filter_by_regexp("/^{$prefix}-/", $params);
 
-   foreach($options as $option => $value) {
-     update_option($option, $value);
-   }
+    foreach($options as $option => $value) {
+      print_r($option, $value);
+      update_option($option, $value);
+    }
 
-   $this->render_settings_form($is_submit=true);
- }
+    $this->render_settings_form($is_submit=true);
+  }
 
  /*
   *
@@ -123,11 +120,6 @@ class OkfnAnnotSettings extends OkfnBase{
      $stored_value = get_option("{$prefix}-{$optname}");
      $options[$optname] = empty($stored_value) ? $value : $stored_value ;
    }
-
-   //radio button selected attribute
-   ($options['allow_anonymous'] === 'y') ?
-     $options['allow_anonymous_y'] = true :
-     $options['allow_anonymous_n'] = true ;
 
    //unescape backslashes automatically added by php for string sanitation
    $options['url_pattern'] = stripslashes($options['url_pattern']);
