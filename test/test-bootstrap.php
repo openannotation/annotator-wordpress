@@ -14,7 +14,7 @@ $okfn_fixtures = new stdClass;
 
 //test helpers
 require_once 'test-helpers.php';
-require_once 'oknf-test-case.php';
+require_once 'okfn-test-case.php';
 
 //core library
 require_once 'okfn-base.php';
