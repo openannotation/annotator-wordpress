@@ -159,7 +159,7 @@ class OkfnAnnotInjector extends OkfnBase {
   }
 
   function inject() {
-    if ($this->content_policy->url_is_annotable()) {
+    if ($this->content_policy->url_is_annotatable()) {
       add_action('wp_print_styles', array($this,'load_stylesheets'));
       add_action('wp_print_scripts', array($this,'load_javascripts'));
       add_action('wp_footer', array($this,'print_snippet'));

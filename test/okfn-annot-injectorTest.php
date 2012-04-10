@@ -11,7 +11,7 @@ class OkfnAnnotInjectorTest extends OkfnTestCase {
   protected function setUp() {
     $this->constructor_arguments = array(
       $this->mockHelper('OkfnAnnotSettings',array(),array(),false),
-      $this->mockHelper('OkfnAnnotContentPolicy',array('url_is_annotable'),array(),false)
+      $this->mockHelper('OkfnAnnotContentPolicy',array('url_is_annotatable'),array(),false)
     );
   }
 
@@ -32,7 +32,7 @@ class OkfnAnnotInjectorTest extends OkfnTestCase {
     $injector_mock = $this->mockHelper('OkfnAnnotInjector', $this->methods_to_mock, $this->constructor_arguments);
 
     $content_policy_mock->expects($this->any())
-          ->method('url_is_annotable')
+          ->method('url_is_annotatable')
           ->will($this->returnValue(true));
 
     $injector_mock->expects($this->once())
@@ -48,7 +48,7 @@ class OkfnAnnotInjectorTest extends OkfnTestCase {
 
 
     $content_policy_mock->expects($this->any())
-          ->method('url_is_annotable')
+          ->method('url_is_annotatable')
           ->will($this->returnValue(true));
 
 
@@ -101,7 +101,7 @@ class OkfnAnnotInjectorTest extends OkfnTestCase {
 
 
     $content_policy_mock->expects($this->any())
-          ->method('url_is_annotable')
+          ->method('url_is_annotatable')
           ->will($this->returnValue(false));
 
     foreach($mock_methods as $method) {

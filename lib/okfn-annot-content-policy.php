@@ -33,7 +33,7 @@ class OkfnAnnotContentPolicy extends OkfnBase {
    * returns whether or not the annotator should be injected in this url.
    *
    */
-  function url_is_annotable($url=null) {
+  function url_is_annotatable($url=null) {
     $url or $url = OkfnUtils::current_url();
     $match= preg_match("/" . $this->url_pattern . "/", $url);
     return $match;
