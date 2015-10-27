@@ -16,12 +16,14 @@ class OkfnAnnotInjector extends OkfnBase {
     // of the annotator (A more fine grained control through the settings can be implemented later).
 
     'javascripts' => array(
-      array(
+/*     todo deniso import jquery properly
+ *       array(
         'file' => 'javascripts/jquery.min.js'
       ),
+*/
       array(
         'file' => 'javascripts/annotator/annotator-full.min.js',
-        'dependencies' => array('json2','jquery'),
+        'dependencies' => array('json2',/*'jquery'*/),
       ),
     ),
 
@@ -50,7 +52,10 @@ class OkfnAnnotInjector extends OkfnBase {
   function load_javascript_dependencies(){
     wp_enqueue_script('json2');
     //deregister the javascript version used by wordpress
-    wp_deregister_script('jquery');
+/*
+ *     todo deniso import jquery properly
+ *     wp_deregister_script('jquery');
+*/
   }
 
   /*
