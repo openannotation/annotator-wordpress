@@ -36,7 +36,7 @@ foreach(array(
 $settings = new OkfnAnnotSettings;
 
 //todo deniso make is_user_logged_in configurable
-if (!is_admin() && is_user_logged_in()) {
+if (!is_admin() /*&& is_user_logged_in()*/) {
   $factory  = new OkfnAnnotFactory($settings);
   $content_policy  = new OkfnAnnotContentPolicy($settings);
   $injector = new OkfnAnnotInjector($factory, $content_policy);
