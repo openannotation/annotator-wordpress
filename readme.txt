@@ -1,8 +1,8 @@
 === Annotator ===
-Contributors: a-fiore
+Contributors: a-fiore, denis.obydennykh
 Tags: annotation, okf, annotate.it
 Requires at least: 3.2.0
-Tested up to: 3.2.0
+Tested up to: 4.3.1
 Stable tag: 0.4
 
 Adds inline annotations to Wordpress using the Open Knowledge
