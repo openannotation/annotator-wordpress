@@ -1,11 +1,11 @@
 <?php
 
-/*
+/**
  * Dynamically generates the JavaScript code snippet needed for instantiating
  * the Annotator.
- *
- *
  */
+
+use \Firebase\JWT\JWT;
 
 class OkfnAnnotFactory extends OkfnBase {
   private $uri; //current wordpress page
@@ -46,8 +46,29 @@ class OkfnAnnotFactory extends OkfnBase {
   private function prepare_variables(){
     $template_vars = $this->settings->get_options_values();
 
-    //todo: add load from search
+    $CONSUMER_TTL = 86400;
+
+    $secret = $template_vars["annotateit_secret"];
+    $objDateTime = new DateTime('NOW');
+    $issuedAt = $objDateTime->format(DateTime::ISO8601)."Z";
+
+    $token = array(
+      'consumerKey'=> $template_vars["annotateit_key"],
+
+      //todo
+      'userId'=> "test user",
+
+      'issuedAt'=> $issuedAt,
+      'ttl' => $CONSUMER_TTL
+    );
+
+    $template_vars["token"] = JWT::encode($token, $secret);
+    $template_vars["user"] = wp_get_current_user()->user_login;
+
+        //todo: add load from search
     $template_vars['uri'] = $this->get_current_uri();
+
+    $template_vars['annotateit_secret'] = ""; //should never be published
 
     return $template_vars;
   }

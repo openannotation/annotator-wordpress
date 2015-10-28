@@ -24,6 +24,7 @@ License: GPLv2 or later
 foreach(array(
   'lib/wp-pluggable',
   'vendor/Mustache',
+  'vendor/php-jwt/src/JWT',
   'lib/okfn-utils',
   'lib/okfn-base',
   'lib/okfn-annot-settings',
