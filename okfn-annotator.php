@@ -38,8 +38,11 @@ $settings = new OkfnAnnotSettings;
 $factory = new OkfnAnnotFactory($settings);
 $content_policy = new OkfnAnnotContentPolicy($settings);
 
-$init_factory = function () use ($factory, $content_policy){
-    if (is_user_logged_in()) {
+$init_factory = function () use ($factory, $content_policy, $settings){
+    $options_values = $settings->get_options_values();
+    $logged_in_only = $options_values["logged_in-only"] == "on";
+
+    if (!$logged_in_only || is_user_logged_in()) {
         $injector = new OkfnAnnotInjector($factory, $content_policy);
         $injector->inject();
     }

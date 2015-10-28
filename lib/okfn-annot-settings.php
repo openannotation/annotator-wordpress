@@ -135,7 +135,7 @@ class OkfnAnnotSettings extends OkfnBase {
      'form_submitted' => $is_submit,
    );
 
-   $options = array_merge($options, $this->get_options_values(true));
+   $options = array_merge($options, $this->get_options_values());
 
    $mustache = new Mustache;
    $template = OkfnUtils::get_template('settings.html');
