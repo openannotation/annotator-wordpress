@@ -18,6 +18,7 @@ class OkfnAnnotSettings extends OkfnBase {
       'url_pattern' => '.*',
       'annotateit_key' => '',
       'annotateit_secret' => '',
+      'logged_in-only' => 'on',
     )
   );
 
@@ -111,6 +112,8 @@ class OkfnAnnotSettings extends OkfnBase {
 
    //unescape backslashes automatically added by php for string sanitation
    $options['url_pattern'] = stripslashes($options['url_pattern']);
+
+   $options['logged_in-only'] = $options['logged_in-only'] == 'on' ? 'on' : '';
 
    return $options;
  }

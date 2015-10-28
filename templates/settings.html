@@ -64,6 +64,21 @@
                            value="{{url_pattern}}"/>
                 </td>
             </tr>
+
+            <tr valign="top">
+                <th scope="row">
+                    <label for="{{prefix}}-logged_in-only">Logged-in users only
+                        <br/>
+                        <small>Annotator will be available only for registered and logged in users
+                        </small>
+                    </label>
+                </th>
+                <td>
+                    <input type="hidden" name="{{prefix}}-logged_in-only" value="off" /> <!-- hack for not sent off checkbox -->
+                    <input type="checkbox" name="{{prefix}}-logged_in-only" id="{{prefix}}-logged_in-only"
+                           {{#logged_in-only}} checked="checked"{{/logged_in-only}}/>
+                </td>
+            </tr>
             </tbody>
         </table>
 

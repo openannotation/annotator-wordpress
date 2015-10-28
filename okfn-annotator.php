@@ -20,27 +20,33 @@ Author URI: http://okfn.org/projects/annotator/
 License: GPLv2 or later
 */
 
-
-foreach(array(
-  'lib/wp-pluggable',
-  'vendor/Mustache',
-  'vendor/php-jwt/src/JWT',
-  'lib/okfn-utils',
-  'lib/okfn-base',
-  'lib/okfn-annot-settings',
-  'lib/okfn-annot-content-policy',
-  'lib/okfn-annot-injector',
-  'lib/okfn-annot-factory',
-) as $lib) require_once("${lib}.php");
+foreach (array(
+             'lib/wp-pluggable',
+             'vendor/Mustache',
+             'vendor/php-jwt/src/JWT',
+             'lib/okfn-utils',
+             'lib/okfn-base',
+             'lib/okfn-annot-settings',
+             'lib/okfn-annot-content-policy',
+             'lib/okfn-annot-injector',
+             'lib/okfn-annot-factory',
+         ) as $lib) require_once("${lib}.php");
 
 $settings = new OkfnAnnotSettings;
 
-//todo deniso make is_user_logged_in configurable
-if (!is_admin() /*&& is_user_logged_in()*/) {
-  $factory  = new OkfnAnnotFactory($settings);
-  $content_policy  = new OkfnAnnotContentPolicy($settings);
-  $injector = new OkfnAnnotInjector($factory, $content_policy);
-  $injector->inject();
-}
+//todo make configurable
+$factory = new OkfnAnnotFactory($settings);
+$content_policy = new OkfnAnnotContentPolicy($settings);
 
+$init_factory = function () use ($factory, $content_policy){
+    if (is_user_logged_in()) {
+        $injector = new OkfnAnnotInjector($factory, $content_policy);
+        $injector->inject();
+    }
+};
+
+//todo deniso make is_user_logged_in configurable
+if (!is_admin()) {
+    add_action('init', $init_factory);
+}
 ?>
