@@ -52,18 +52,17 @@ class OkfnAnnotFactory extends OkfnBase {
     $objDateTime = new DateTime('NOW');
     $issuedAt = $objDateTime->format(DateTime::ISO8601)."Z";
 
+    $user = wp_get_current_user()->user_login;
+
     $token = array(
       'consumerKey'=> $template_vars["annotateit_key"],
-
-      //todo
-      'userId'=> "test user",
-
+      'userId'=> $user,
       'issuedAt'=> $issuedAt,
       'ttl' => $CONSUMER_TTL
     );
 
     $template_vars["token"] = JWT::encode($token, $secret);
-    $template_vars["user"] = wp_get_current_user()->user_login;
+    $template_vars["user"] = $user;
 
         //todo: add load from search
     $template_vars['uri'] = $this->get_current_uri();
