@@ -8,13 +8,15 @@ jQuery(function ($) {
                 Store: {
                     annotationData: {uri: '{{uri}}'},
                     loadFromSearch: {uri: '{{uri}}', limit: 200}
-                },
-                Permissions: {
-                    user: '{{user}}',
-                },
-                Auth: {
+                }
+                , Auth: {
                     token: '{{token}}'
                 }
+/*
+                , Permissions: {
+                    user: '{{user}}'
+                }
+*/
             })
     } else {
         throw new Error("OkfnAnnotator: Unable to find a DOM element for selector '{{annotator_content}}'; cannot instantiate the Annotator");

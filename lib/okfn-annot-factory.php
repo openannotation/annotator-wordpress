@@ -52,7 +52,7 @@ class OkfnAnnotFactory extends OkfnBase {
     $objDateTime = new DateTime('NOW');
     $issuedAt = $objDateTime->format(DateTime::ISO8601)."Z";
 
-    $user = wp_get_current_user()->user_login;
+    $user = true ? "" : wp_get_current_user()->user_login; //client 1.2 seems to be buggy, waiting for v2
 
     $token = array(
       'consumerKey'=> $template_vars["annotateit_key"],
