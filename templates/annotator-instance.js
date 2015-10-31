@@ -2,17 +2,18 @@ jQuery(function ($) {
     var element = $('{{annotator_content}}');
 
     if (element) {
-        element.annotator()
+        var annotatorInstance = element.annotator();
+        annotatorInstance
             .annotator('setupPlugins', null, {
                 Store: {
                     annotationData: {uri: '{{uri}}'},
                     loadFromSearch: {uri: '{{uri}}', limit: 200}
                 },
+                Permissions: {
+                    user: '{{user}}',
+                },
                 Auth: {
                     token: '{{token}}'
-                },
-                Permissions: {
-                    user: '{{user}}'
                 }
             })
     } else {
