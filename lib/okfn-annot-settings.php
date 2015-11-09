@@ -16,6 +16,9 @@ class OkfnAnnotSettings extends OkfnBase {
     'default_options' => array(
       'annotator_content' => '.entry-content',
       'url_pattern' => '.*',
+      'annotateit_key' => '',
+      'annotateit_secret' => '',
+      'logged_in-only' => 'on',
     )
   );
 
@@ -93,17 +96,33 @@ class OkfnAnnotSettings extends OkfnBase {
     $this->render_settings_form($is_submit=true);
   }
 
- /*
-  *
-  * Renders the HTML for the Annotator settings options page.
-  *
-  * is_submit - boolean flag indicating whether data has been submitted
-  *
-  *
-  * returns a rendered form template
-  *
+ /**
+  * Returns values for current plugin options - stored or default
+  * is_prefix - boolean flag indicating add prefix before nme or not
+  * returns array with name-value options
   */
+ function get_options_values() {
+   $prefix = $this->conf->forminput_prefix;
+   $options = array();
 
+   foreach($this->conf->default_options as $optname => $value) {
+     $stored_value = get_option("{$prefix}-{$optname}");
+     $options[$optname] = empty($stored_value) ? $value : $stored_value ;
+   }
+
+   //unescape backslashes automatically added by php for string sanitation
+   $options['url_pattern'] = stripslashes($options['url_pattern']);
+
+   $options['logged_in-only'] = $options['logged_in-only'] == 'on' ? 'on' : '';
+
+   return $options;
+ }
+
+ /**
+  * Renders the HTML for the Annotator settings options page.
+  * is_submit - boolean flag indicating whether data has been submitted
+  * returns a rendered form template
+  */
  function render_settings_form($is_submit=false) {
 
    $prefix = $this->conf->forminput_prefix;
@@ -116,28 +135,17 @@ class OkfnAnnotSettings extends OkfnBase {
      'form_submitted' => $is_submit,
    );
 
-   foreach($this->conf->default_options as $optname => $value) {
-     $stored_value = get_option("{$prefix}-{$optname}");
-     $options[$optname] = empty($stored_value) ? $value : $stored_value ;
-   }
-
-   //unescape backslashes automatically added by php for string sanitation
-   $options['url_pattern'] = stripslashes($options['url_pattern']);
+   $options = array_merge($options, $this->get_options_values());
 
    $mustache = new Mustache;
    $template = OkfnUtils::get_template('settings.html');
    print $mustache->render($template, $options);
  }
 
- /*
+ /**
   * Public:
-  *
   * Logical switch determining whether to render or to process the setting form.
-  *
-  *
   * params - the request parameters (defaults to $_POST if not provided).
-  *
-  *
   * returns nothing
   */
 
