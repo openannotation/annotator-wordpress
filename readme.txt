@@ -24,6 +24,6 @@ Foundation's Annotator tool.
 
 1. Upload the 'okfn-annotator' folder and place it into into `/wp-content/plugins/`.
 2. Activate the plugin through the 'Plugins' menu in WordPress.
-3. Finally, sign up at [AnnotateIt](http://annotateti.org) and 
+3. Finally, sign up at [AnnotateIt](http://annotateit.org) and 
 fill your _Account ID_ and _Auth Token_ details in the Plugin settings
 form.
