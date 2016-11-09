@@ -21,7 +21,7 @@ PHP >= 5.\*.\*
 Just `git clone` this project into the `wp-content/plugins/` directory, then
 activate the plugin through the Wordpress administration panel accessible at `http://<blogaddress>/wp-admin/plugins.php`.
 
-You will also need to sign up at [AnnotateIt](http://annotateti.org) and 
+You will also need to sign up at [AnnotateIt](http://annotateit.org) and 
 fill your _Account ID_ and _Auth Token_ details in the Plugin settings
 form.
 
